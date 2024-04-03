@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://scripts/fly.gd" id="1_h6wqc"]
 [ext_resource type="Texture2D" uid="uid://kmf781ydgb6v" path="res://assets/Tiles/Characters/tile_0024.png" id="1_v4rmv"]
-[ext_resource type="Shader" path="res://shaders/fly.gdshader" id="2_25ggx"]
 [ext_resource type="Texture2D" uid="uid://b21ukne7rcoi0" path="res://assets/Tiles/Characters/tile_0025.png" id="2_s0qia"]
 [ext_resource type="Texture2D" uid="uid://r5veyld1qe7f" path="res://assets/Tiles/Characters/tile_0026.png" id="3_vconm"]
 
