@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyj1q5j6bv0ru"]
+
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_pvby4"]
+[ext_resource type="Texture2D" uid="uid://wtfbp1gnhtfe" path="res://assets/Tiles/tile_0027.png" id="2_l8o1c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_isf2i"]
+size = Vector2(72, 48)
+
+[node name="projectile" type="RigidBody2D" groups=["projectile"]]
+collision_layer = 4
+collision_mask = 12
+mass = 0.5
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_pvby4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_isf2i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_l8o1c")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(4.76837e-07, 0)
+scale = Vector2(1.1, 0.8)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_exited" from="." to="." method="_on_body_shape_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_exited"]
