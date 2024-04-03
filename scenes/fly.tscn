@@ -1,44 +1,40 @@
-[gd_scene load_steps=9 format=3 uid="uid://bpevapgq2st35"]
+[gd_scene load_steps=7 format=3 uid="uid://blr6q8atnrvhj"]
 
-[ext_resource type="Script" path="res://scripts/fly.gd" id="1_h6wqc"]
-[ext_resource type="Texture2D" uid="uid://kmf781ydgb6v" path="res://assets/Tiles/Characters/tile_0024.png" id="1_v4rmv"]
-[ext_resource type="Texture2D" uid="uid://b21ukne7rcoi0" path="res://assets/Tiles/Characters/tile_0025.png" id="2_s0qia"]
-[ext_resource type="Texture2D" uid="uid://r5veyld1qe7f" path="res://assets/Tiles/Characters/tile_0026.png" id="3_vconm"]
+[ext_resource type="Script" path="res://scripts/fly.gd" id="1_c2p3g"]
+[ext_resource type="Texture2D" uid="uid://kmf781ydgb6v" path="res://assets/Tiles/Characters/tile_0024.png" id="2_at5fu"]
+[ext_resource type="Texture2D" uid="uid://b21ukne7rcoi0" path="res://assets/Tiles/Characters/tile_0025.png" id="3_2jj05"]
+[ext_resource type="Texture2D" uid="uid://r5veyld1qe7f" path="res://assets/Tiles/Characters/tile_0026.png" id="4_dyuta"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bjykj"]
-shader = ExtResource("2_25ggx")
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_p3nqw"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_srp4n"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_v4rmv")
+"texture": ExtResource("2_at5fu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_s0qia")
+"texture": ExtResource("3_2jj05")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_vconm")
+"texture": ExtResource("4_dyuta")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_didym"]
-size = Vector2(8, 8)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7yok"]
+size = Vector2(10, 8)
 
 [node name="fly" type="CharacterBody2D"]
 collision_layer = 8
-collision_mask = 14
-script = ExtResource("1_h6wqc")
+collision_mask = 6
+script = ExtResource("1_c2p3g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_bjykj")
-sprite_frames = SubResource("SpriteFrames_p3nqw")
+sprite_frames = SubResource("SpriteFrames_srp4n")
 autoplay = "default"
-frame_progress = 0.767182
+frame_progress = 0.937029
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_didym")
+shape = SubResource("RectangleShape2D_p7yok")

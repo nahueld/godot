@@ -2,8 +2,6 @@ class_name Fly extends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
 
-const IDENTIFIER = "fly"
-
 var damage = 5
 
 func _ready():
