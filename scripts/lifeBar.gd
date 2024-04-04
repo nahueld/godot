@@ -1,6 +1,8 @@
 class_name LifeBar extends Line2D
 
 signal life_depleted
+signal life_reduced
+signal life_increased
 
 var max_life = 25
 var min_life = 0
@@ -33,25 +35,29 @@ func change_life(life: float):
 		return 0
 		
 	is_invincible = true
+	
+	var signal_name = 'life_reduced' if life < 0 else 'life_increased'
 
 	var timer: Timer = get_node('InvincibilitySpan')
 	timer.start(invincibility_span)
 		
-	var lifeBarEndPoint: Vector2 = get_point_position(1)
+	var life_bar_end_point: Vector2 = get_point_position(1)
 	
-	var changed: Vector2 = change_life_bar_size(lifeBarEndPoint, life)
-	var with_defaults: Vector2 = set_defaults(changed)
+	var changed: Vector2 = change_life_bar_size(life_bar_end_point, life)
+	var life_bar_new_end_point: Vector2 = set_defaults(changed)
 	
 	if tween == null:
 		tween = create_tween()
 		tween.set_trans(Tween.TRANS_ELASTIC)
 	
-	tween.tween_method(func (vector: Vector2): set_point_position(1, vector), lifeBarEndPoint, with_defaults, invincibility_span)
+	tween.tween_method(func (vector: Vector2): set_point_position(1, vector), life_bar_end_point, life_bar_new_end_point, invincibility_span)
 	
-	if with_defaults.x == 0:
+	if life_bar_new_end_point.x == 0:
 		emit_signal('life_depleted')
+	else:
+		emit_signal(signal_name, life)
 	
-	return with_defaults.x
+	return life_bar_new_end_point.x
 
 func _on_invincibility_span_timeout():
 	tween = null

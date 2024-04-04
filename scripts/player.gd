@@ -2,7 +2,8 @@ class_name Player extends CharacterBody2D
 
 signal projectile_shot(p)
 
-@onready var lifeBar: LifeBar = $LifeBar
+@onready var life_bar: LifeBar = $LifeBar
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
@@ -15,7 +16,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var projectileScene = preload("res://scenes/projectile.tscn")
 
 func _ready():
-	lifeBar.invincibility_span = INVINCIBILITY_SPAN
+	life_bar.invincibility_span = INVINCIBILITY_SPAN
+	life_bar.connect('life_reduced', on_life_reduced)
 
 func _process(delta):
 	process_collision()
@@ -45,13 +47,12 @@ func process_collision():
 		if damage == null || damage == 0:
 			return
 		
-		lifeBar.change_life(-damage)
+		life_bar.change_life(-damage)
 			
 	else:
 		return
 
 func _physics_process(delta):
-	var sprite = get_node('AnimatedSprite2D')	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -73,6 +74,15 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
+func on_life_reduced(damage):
+	var tween = create_tween()
+	
+	var current_modulate = sprite.modulate
+	
+	for n in 4:
+		var modulate_to = current_modulate if n % 2 else Color.RED 
+		tween.tween_property(sprite, 'modulate', modulate_to, 0.1)
+	
 func _on_screen_exit():
 	print('y se marcho :(')
 	queue_free()
