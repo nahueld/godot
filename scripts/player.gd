@@ -45,7 +45,7 @@ func process_collision():
 		if damage == null || damage == 0:
 			return
 		
-		lifeBar.take_damage(damage)
+		lifeBar.change_life(-damage)
 			
 	else:
 		return
