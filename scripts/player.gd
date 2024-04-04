@@ -4,7 +4,7 @@ signal projectile_shot(p)
 
 var is_invincible = false
 
-@onready var lifeBar: Polygon2D = $LifeBar
+@onready var lifeBar: Line2D = $LifeBar
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -300.0

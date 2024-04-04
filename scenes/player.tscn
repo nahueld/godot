@@ -41,13 +41,14 @@ position = Vector2(0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="LifeBar" type="Polygon2D" parent="."]
+[node name="LifeBar" type="Line2D" parent="."]
 light_mask = 16
 visibility_layer = 16
-position = Vector2(-10, -13)
+position = Vector2(-10, -14)
 scale = Vector2(0.8, 0.333334)
-color = Color(0.25098, 0.772549, 0.313726, 1)
-polygon = PackedVector2Array(25, -3, 25, -6, 0, -6, 0, -3)
+points = PackedVector2Array(0, 0, 25, 0)
+width = 5.0
+default_color = Color(0.45098, 0.811765, 0.184314, 1)
 script = ExtResource("4_21eyi")
 
 [node name="InvincibilitySpan" type="Timer" parent="."]
