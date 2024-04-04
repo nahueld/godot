@@ -4,6 +4,7 @@ signal projectile_shot(p)
 
 @onready var life_bar: LifeBar = $LifeBar
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
@@ -20,22 +21,13 @@ func _ready():
 	life_bar.connect('life_reduced', on_life_reduced)
 
 func _process(delta):
-	process_collision()
-		
-func process_collision():
-	var collision = get_last_slide_collision()
-	
-	if collision == null:
-		return
-		
-	var collider = collision.get_collider()
-	
-	if collider == null:
-		return
-		
-	if(collider is Fly):
+	pass
+
+func process_collision(body: Node2D):
+
+	if(body is Fly):
 		#do fly stuff
-		var damage = collider.damage
+		var damage = body.damage
 		
 		if damage == null || damage == 0:
 			return
@@ -95,3 +87,8 @@ func on_life_reduced(damage):
 func _on_screen_exit():
 	print('y se marcho :(')
 	queue_free()
+
+
+func on_body_entered(body: Node2D):
+	print('body entered', body)
+	process_collision(body)

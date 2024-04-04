@@ -1,11 +1,11 @@
 class_name Fly extends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
+@onready var collision_box = $CollisionShape2D
 
 var damage = 5
 
 func _ready():
-	print(sprite)
 	var variations = [
 		Color.DARK_BLUE,
 		Color.DARK_OLIVE_GREEN,
