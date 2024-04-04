@@ -51,7 +51,8 @@ width = 5.0
 default_color = Color(0.45098, 0.811765, 0.184314, 1)
 script = ExtResource("4_21eyi")
 
-[node name="InvincibilitySpan" type="Timer" parent="."]
+[node name="InvincibilitySpan" type="Timer" parent="LifeBar"]
+wait_time = 0.5
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exit"]
-[connection signal="timeout" from="InvincibilitySpan" to="." method="_on_invincibility_span_timeout"]
+[connection signal="timeout" from="LifeBar/InvincibilitySpan" to="LifeBar" method="_on_invincibility_span_timeout"]

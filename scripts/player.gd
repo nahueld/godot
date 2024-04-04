@@ -2,19 +2,20 @@ class_name Player extends CharacterBody2D
 
 signal projectile_shot(p)
 
-var is_invincible = false
-
-@onready var lifeBar: Line2D = $LifeBar
+@onready var lifeBar: LifeBar = $LifeBar
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
 const THROW_FORCE = -400
-const INVINCIBILITY_SPAN = 3
+const INVINCIBILITY_SPAN = 0.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var projectileScene = preload("res://scenes/projectile.tscn")
+
+func _ready():
+	lifeBar.invincibility_span = INVINCIBILITY_SPAN
 
 func _process(delta):
 	process_collision()
@@ -44,11 +45,7 @@ func process_collision():
 		if damage == null || damage == 0:
 			return
 		
-		if is_invincible == false:
-			is_invincible = true
-			lifeBar.take_damage(damage)
-			var timer: Timer = get_node('InvincibilitySpan')
-			timer.start(INVINCIBILITY_SPAN)
+		lifeBar.take_damage(damage)
 			
 	else:
 		return
@@ -79,7 +76,3 @@ func _physics_process(delta):
 func _on_screen_exit():
 	print('y se marcho :(')
 	queue_free()
-
-
-func _on_invincibility_span_timeout():
-	is_invincible = false
