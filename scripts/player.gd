@@ -22,13 +22,6 @@ func _ready():
 func _process(delta):
 	process_collision()
 		
-	if Input.is_action_just_pressed("ui_up"):
-		var p = projectileScene.instantiate()
-		p.global_position = position
-		p.xSpeed = velocity.x
-		p.ySpeed = THROW_FORCE
-		emit_signal("projectile_shot", p)
-		
 func process_collision():
 	var collision = get_last_slide_collision()
 	
@@ -60,13 +53,29 @@ func _physics_process(delta):
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		
+	if Input.is_action_just_pressed("ui_up"):
+		var p = projectileScene.instantiate()
+		p.global_position = position
+		p.xSpeed = velocity.x
+		p.ySpeed = THROW_FORCE
+		emit_signal("projectile_shot", p)
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		sprite.play()
-		sprite.set_flip_h(velocity.x > 0)
+		
+		var has_to_flip = velocity.x > 0 && sprite.flip_h == false
+		var has_to_unflip = velocity.x < 0 && sprite.flip_h == true
+		
+		if has_to_flip:
+			sprite.set_flip_h(true)
+			
+		if has_to_unflip:
+			sprite.set_flip_h(false)
+			
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
