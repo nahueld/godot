@@ -2,29 +2,25 @@ extends Node2D
 
 @onready var projectile = $projectile
 @onready var player = $player
+@onready var life_bar = $player/LifeBar
 
 var fly = preload("res://scenes/fly.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player.connect('projectile_shot', on_projectile_shot)
-	var lifeBar = player.get_node('LifeBar')
-	
-	if(lifeBar != null):
-		lifeBar.connect('life_depleted', on_life_depleted)
-	
+	life_bar.connect('life_depleted', on_life_depleted)
 	add_child(fly.instantiate())
-
-func on_projectile_shot(p):
-	add_child(p)
-
-func on_life_depleted():
-	print('life depleted event happened')
-	queue_free()
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func on_life_depleted():
+	queue_free()
+
+func on_projectile_shot(p):
+	add_child(p)
 
 func _on_timer_timeout():
 	var newFly = fly.instantiate()
