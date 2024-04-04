@@ -13,7 +13,7 @@ func _ready():
 	]
 	
 	var colorIdx = randi_range(0, variations.size() - 1)
-	sprite.modulate = variations[colorIdx]  
+	sprite.modulate = variations[colorIdx]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

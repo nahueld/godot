@@ -20,23 +20,6 @@ func _ready():
 	life_bar.invincibility_span = INVINCIBILITY_SPAN
 	life_bar.connect('life_reduced', on_life_reduced)
 
-func _process(delta):
-	pass
-
-func process_collision(body: Node2D):
-
-	if(body is Fly):
-		#do fly stuff
-		var damage = body.damage
-		
-		if damage == null || damage == 0:
-			return
-		
-		life_bar.change_life(-damage)
-			
-	else:
-		return
-
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -88,8 +71,3 @@ func on_life_reduced(damage):
 func _on_screen_exit():
 	print('y se marcho :(')
 	queue_free()
-
-
-func on_body_entered(body: Node2D):
-	print('body entered', body)
-	process_collision(body)
