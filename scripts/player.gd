@@ -48,8 +48,9 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("ui_up"):
 		var p = projectileScene.instantiate()
+		print('shooting', velocity.x)
 		p.global_position = position
-		p.xSpeed = velocity.x
+		p.xSpeed = -1 if sprite.flip_h == false else 1
 		p.ySpeed = THROW_FORCE
 		emit_signal("projectile_shot", p)
 

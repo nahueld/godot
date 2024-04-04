@@ -1,13 +1,12 @@
 class_name Projectile extends RigidBody2D
 
 var maxXSpeed = 100
-var maxTorque = 200
+var maxTorque = 1500
 var xSpeed = self.maxXSpeed
 var ySpeed = -500
 
 func _ready():
 	print("started with impulse: {xSpeed} and {ySpeed}".format({ "xSpeed": xSpeed, "ySpeed":ySpeed }))
-	self.rotation_degrees = 360
 	var cappedSpeed = get_capped_constant(self.xSpeed, self.maxXSpeed)
 	self.apply_impulse(Vector2(cappedSpeed, ySpeed), Vector2.ZERO)
 		
