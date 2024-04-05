@@ -31,9 +31,7 @@ func on_body_entered(b):
 		
 func on_body_exited(b):
 	if b is Fly:
-		print('fly leaves')
 		var r = collisions.erase(b.get_instance_id())
-		print('result is ', r)
 
 func _process(delta):
 	if(!collisions.is_empty()):
