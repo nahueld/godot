@@ -22,12 +22,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7yok"]
-size = Vector2(8, 10)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r8dac"]
+size = Vector2(10, 10)
 
 [node name="fly" type="CharacterBody2D"]
 collision_layer = 8
-collision_mask = 6
+collision_mask = 12
 script = ExtResource("1_c2p3g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -37,4 +37,4 @@ frame_progress = 0.937029
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_p7yok")
+shape = SubResource("RectangleShape2D_r8dac")
