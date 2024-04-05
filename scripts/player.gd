@@ -5,6 +5,7 @@ signal projectile_shot(p)
 @onready var life_bar: LifeBar = $LifeBar
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var area: Area2D = $Area2D
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
@@ -13,12 +14,32 @@ const INVINCIBILITY_SPAN = 0.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
+var collisions: Dictionary = {}
 var projectileScene = preload("res://scenes/projectile.tscn")
 
 func _ready():
 	life_bar.invincibility_span = INVINCIBILITY_SPAN
 	life_bar.connect('life_reduced', on_life_reduced)
+	area.connect('body_entered', on_body_entered)
+	area.connect('body_exited', on_body_exited)
+	
+func on_body_entered(b):
+	if b is Fly:
+		var key = b.get_instance_id()
+		var value = b
+		collisions[key] = value
+		
+func on_body_exited(b):
+	if b is Fly:
+		print('fly leaves')
+		var r = collisions.erase(b.get_instance_id())
+		print('result is ', r)
+
+func _process(delta):
+	if(!collisions.is_empty()):
+		var values = collisions.values()
+		for v in values:
+			life_bar.change_life(-v.damage)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -31,7 +52,7 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("ui_up"):
 		var p = projectileScene.instantiate()
-		print('shooting', velocity.x)
+		
 		p.global_position = position
 		p.xSpeed = -1 if sprite.flip_h == false else 1
 		p.ySpeed = THROW_FORCE
