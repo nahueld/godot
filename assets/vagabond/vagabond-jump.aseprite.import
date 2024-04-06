@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://crm5vg3qcgybs"
+path="res://.godot/imported/vagabond-jump.aseprite-5b73c65d9ee615ee1bf00cfb3d4fc6ab.res"
+
+[deps]
+
+source_file="res://assets/vagabond/vagabond-jump.aseprite"
+dest_files=["res://.godot/imported/vagabond-jump.aseprite-5b73c65d9ee615ee1bf00cfb3d4fc6ab.res"]
+
+[params]
+

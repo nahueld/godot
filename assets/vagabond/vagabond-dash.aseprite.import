@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cfmrema7ej8ob"
+path="res://.godot/imported/vagabond-dash.aseprite-7d414b159186a2044dc5eec9f62cbc1c.res"
+
+[deps]
+
+source_file="res://assets/vagabond/vagabond-dash.aseprite"
+dest_files=["res://.godot/imported/vagabond-dash.aseprite-7d414b159186a2044dc5eec9f62cbc1c.res"]
+
+[params]
+

@@ -1,18 +1,120 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmt6ylwymfqlv"]
+[gd_scene load_steps=24 format=3 uid="uid://bmt6ylwymfqlv"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l1ch3"]
-[ext_resource type="Texture2D" uid="uid://b3uhevgdkk7xd" path="res://assets/Tiles/Characters/tile_0000.png" id="2_no0e4"]
-[ext_resource type="Texture2D" uid="uid://b7mswi1h50gtx" path="res://assets/Tiles/Characters/tile_0001.png" id="3_rgk4y"]
+[ext_resource type="Texture2D" uid="uid://blvwnwppofxot" path="res://scenes/vagabond-idle.png" id="2_4m1oa"]
+[ext_resource type="Texture2D" uid="uid://c1cskqbuxbwlf" path="res://scenes/vagabond-run.png" id="3_cy2sn"]
 [ext_resource type="Script" path="res://scripts/lifeBar.gd" id="4_21eyi"]
+[ext_resource type="Texture2D" uid="uid://c2ctrn864trx1" path="res://scenes/vagabond-jump.png" id="4_qgcio"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_uu0ee"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxouf"]
+atlas = ExtResource("2_4m1oa")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e18t7"]
+atlas = ExtResource("2_4m1oa")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rlyd0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_no0e4")
+"texture": SubResource("AtlasTexture_cxouf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_rgk4y")
+"texture": SubResource("AtlasTexture_e18t7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqqs5"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j56pf"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwf8f"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuqsk"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_457yi"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thbmc"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nw3o"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rx8r"]
+atlas = ExtResource("3_cy2sn")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8uc3d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqqs5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j56pf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwf8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vuqsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_457yi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thbmc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nw3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rx8r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o5ga"]
+atlas = ExtResource("4_qgcio")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dil7a"]
+atlas = ExtResource("4_qgcio")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5m6y"]
+atlas = ExtResource("4_qgcio")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vdhq5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o5ga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dil7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5m6y")
 }],
 "loop": true,
 "name": &"default",
@@ -29,10 +131,54 @@ size = Vector2(22, 23)
 collision_layer = 2
 script = ExtResource("1_l1ch3")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_uu0ee")
+[node name="Idle" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, -20)
+sprite_frames = SubResource("SpriteFrames_rlyd0")
 autoplay = "default"
-frame_progress = 0.638714
+frame_progress = 0.59374
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/vagabond/vagabond-idle.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": false,
+"slice_section": false
+}
+
+[node name="Run" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(3, -20)
+sprite_frames = SubResource("SpriteFrames_8uc3d")
+frame_progress = 0.322426
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/vagabond/vagabond-run.aseprite"
+}
+
+[node name="Jump" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_vdhq5")
+frame_progress = 0.538388
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/vagabond/vagabond-jump.aseprite"
+}
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0, 0.499999)

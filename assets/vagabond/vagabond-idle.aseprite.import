@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://da5vmhn145rj5"
+path="res://.godot/imported/vagabond-idle.aseprite-0c6fc3c441ee7edd7fc34bd9288784c4.res"
+
+[deps]
+
+source_file="res://assets/vagabond/vagabond-idle.aseprite"
+dest_files=["res://.godot/imported/vagabond-idle.aseprite-0c6fc3c441ee7edd7fc34bd9288784c4.res"]
+
+[params]
+

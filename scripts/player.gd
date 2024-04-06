@@ -3,7 +3,11 @@ class_name Player extends CharacterBody2D
 signal projectile_shot(p)
 
 @onready var life_bar: LifeBar = $LifeBar
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+@onready var idle_sprite: AnimatedSprite2D = $Idle
+@onready var run_sprite: AnimatedSprite2D = $Run
+@onready var jump_sprite: AnimatedSprite2D = $Jump
+
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var area: Area2D = $Area2D
 
@@ -18,6 +22,13 @@ var collisions: Dictionary = {}
 var projectileScene = preload("res://scenes/projectile.tscn")
 
 func _ready():
+	run_sprite.play()
+	jump_sprite.play()
+	idle_sprite.play()
+	
+	run_sprite.hide()
+	jump_sprite.hide()
+	
 	life_bar.invincibility_span = INVINCIBILITY_SPAN
 	life_bar.connect('life_reduced', on_life_reduced)
 	area.connect('body_entered', on_body_entered)
@@ -43,16 +54,23 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	else:
+		jump_sprite.hide()
+		idle_sprite.show()
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		idle_sprite.hide()
+		run_sprite.hide()
+		jump_sprite.show()
+		
 		velocity.y = JUMP_VELOCITY
 		
 	if Input.is_action_just_pressed("ui_up"):
 		var p = projectileScene.instantiate()
 		
 		p.global_position = position
-		p.xSpeed = -1 if sprite.flip_h == false else 1
+		p.xSpeed = -1 if idle_sprite.flip_h == false else 1
 		p.ySpeed = THROW_FORCE
 		emit_signal("projectile_shot", p)
 		
@@ -64,32 +82,41 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		sprite.play()
-		
-		var has_to_flip = velocity.x > 0 && sprite.flip_h == false
-		var has_to_unflip = velocity.x < 0 && sprite.flip_h == true
-		
-		if has_to_flip:
-			sprite.set_flip_h(true)
+		if is_on_floor():
+			idle_sprite.hide()
+			run_sprite.show()
 			
-		if has_to_unflip:
-			sprite.set_flip_h(false)
-			
-		velocity.x = direction * SPEED
+			if velocity.x > 0:
+				run_sprite.set_flip_h(false)
+			elif velocity.x < 0:
+				run_sprite.set_flip_h(true)	
+			#if has_to_unflip:
+				#run_sprite.set_flip_h(false)
+				
+			velocity.x = direction * SPEED
+		else:
+			idle_sprite.hide()
+			run_sprite.hide()
 	else:
+		if velocity.x > 0:
+			idle_sprite.set_flip_h(false)
+		elif velocity.x < 0:
+			idle_sprite.set_flip_h(true)
+			
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		sprite.stop()
+		run_sprite.hide()
+		idle_sprite.show()
 	
 	move_and_slide()
 
 func on_life_reduced(damage):
 	var tween = create_tween()
 	
-	var current_modulate = sprite.modulate
+	var current_modulate = idle_sprite.modulate
 	
 	for n in 4:
 		var modulate_to = current_modulate if n % 2 else Color.RED 
-		tween.tween_property(sprite, 'modulate', modulate_to, 0.1)
+		tween.tween_property(idle_sprite, 'modulate', modulate_to, 0.1)
 	
 func _on_screen_exit():
 	print('y se marcho :(')

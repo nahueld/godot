@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://de3y6rumxo72t"
+path="res://.godot/imported/vagabond-run.aseprite-2cae30278d5567df21a66034a297556c.res"
+
+[deps]
+
+source_file="res://assets/vagabond/vagabond-run.aseprite"
+dest_files=["res://.godot/imported/vagabond-run.aseprite-2cae30278d5567df21a66034a297556c.res"]
+
+[params]
+
