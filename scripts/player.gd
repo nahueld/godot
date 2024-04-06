@@ -55,6 +55,10 @@ func _physics_process(delta):
 		p.xSpeed = -1 if sprite.flip_h == false else 1
 		p.ySpeed = THROW_FORCE
 		emit_signal("projectile_shot", p)
+		
+	if Input.is_action_just_pressed('attack'):
+		print('pressed')
+		
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
