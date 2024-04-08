@@ -10,8 +10,8 @@ var fly = preload("res://scenes/fly.tscn")
 func _ready():
 	player.connect('projectile_shot', on_projectile_shot)
 	life_bar.connect('life_depleted', on_life_depleted)
-	create_fly()
-	create_fly()
+	#create_fly()
+	#create_fly()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -31,7 +31,7 @@ func create_fly():
 		(player.global_position.y + randf_range(-500,500))
 	)
 	
-	add_child(newFly)
+	#add_child(newFly)
 
 func _on_timer_timeout():
 	create_fly()

@@ -136,7 +136,7 @@ texture_filter = 1
 position = Vector2(1, -20)
 sprite_frames = SubResource("SpriteFrames_rlyd0")
 autoplay = "default"
-frame_progress = 0.59374
+frame_progress = 0.935337
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",
@@ -155,7 +155,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 texture_filter = 1
 position = Vector2(3, -20)
 sprite_frames = SubResource("SpriteFrames_8uc3d")
-frame_progress = 0.322426
+frame_progress = 0.664137
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",
@@ -169,7 +169,7 @@ metadata/_aseprite_wizard_config_ = {
 [node name="Jump" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_vdhq5")
-frame_progress = 0.538388
+frame_progress = 0.880017
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",

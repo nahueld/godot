@@ -21,11 +21,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var collisions: Dictionary = {}
 var projectileScene = preload("res://scenes/projectile.tscn")
 
+var pos_y = global_position.y
+
 func _ready():
 	run_sprite.play()
 	jump_sprite.play()
 	idle_sprite.play()
 	
+	idle_sprite.hide()
 	run_sprite.hide()
 	jump_sprite.hide()
 	
@@ -33,6 +36,8 @@ func _ready():
 	life_bar.connect('life_reduced', on_life_reduced)
 	area.connect('body_entered', on_body_entered)
 	area.connect('body_exited', on_body_exited)
+	
+	pos_y = global_position.y
 	
 func on_body_entered(b):
 	if b is Fly:
@@ -51,20 +56,17 @@ func _process(delta):
 			life_bar.change_life(-v.damage)
 
 func _physics_process(delta):
+	play_jumping_animation()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
 		jump_sprite.hide()
-		idle_sprite.show()
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		idle_sprite.hide()
-		run_sprite.hide()
-		jump_sprite.show()
-		
 		velocity.y = JUMP_VELOCITY
+		
 		
 	if Input.is_action_just_pressed("ui_up"):
 		var p = projectileScene.instantiate()
@@ -105,7 +107,7 @@ func _physics_process(delta):
 			
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		run_sprite.hide()
-		idle_sprite.show()
+		#idle_sprite.show()
 	
 	move_and_slide()
 
@@ -121,3 +123,28 @@ func on_life_reduced(damage):
 func _on_screen_exit():
 	print('y se marcho :(')
 	queue_free()
+
+var previous_height = global_position.y
+
+func play_jumping_animation():
+	if is_on_floor():
+		return
+	
+	print('previous_height', previous_height)
+	var is_rising = previous_height > global_position.y
+	var is_falling = previous_height < global_position.y
+	
+	var difference = global_position.y - previous_height
+	var rounded = roundi(difference)
+	print('rounded ', rounded)
+
+	if rounded == 0:
+		jump_sprite.set_frame(1)
+	elif is_rising:
+		jump_sprite.set_frame(0)
+	elif is_falling:
+		jump_sprite.set_frame(2)
+
+	previous_height = global_position.y
+	jump_sprite.pause()
+	jump_sprite.show()
