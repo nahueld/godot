@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://bmt6ylwymfqlv"]
+[gd_scene load_steps=41 format=3 uid="uid://bmt6ylwymfqlv"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l1ch3"]
 [ext_resource type="Texture2D" uid="uid://blvwnwppofxot" path="res://scenes/vagabond-idle.png" id="2_4m1oa"]
 [ext_resource type="Texture2D" uid="uid://c1cskqbuxbwlf" path="res://scenes/vagabond-run.png" id="3_cy2sn"]
 [ext_resource type="Script" path="res://scripts/lifeBar.gd" id="4_21eyi"]
 [ext_resource type="Texture2D" uid="uid://c2ctrn864trx1" path="res://scenes/vagabond-jump.png" id="4_qgcio"]
+[ext_resource type="Texture2D" uid="uid://58t3svml6vpf" path="res://scenes/vagabond-attack.png" id="5_mldet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cxouf"]
 atlas = ExtResource("2_4m1oa")
@@ -121,6 +122,119 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0f7n6"]
+atlas = ExtResource("5_mldet")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2o2n"]
+atlas = ExtResource("5_mldet")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdj0e"]
+atlas = ExtResource("5_mldet")
+region = Rect2(256, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpvam"]
+atlas = ExtResource("5_mldet")
+region = Rect2(384, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydhyc"]
+atlas = ExtResource("5_mldet")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_434wl"]
+atlas = ExtResource("5_mldet")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50cm7"]
+atlas = ExtResource("5_mldet")
+region = Rect2(256, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gqs5"]
+atlas = ExtResource("5_mldet")
+region = Rect2(384, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rim31"]
+atlas = ExtResource("5_mldet")
+region = Rect2(0, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqvor"]
+atlas = ExtResource("5_mldet")
+region = Rect2(128, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1cyb"]
+atlas = ExtResource("5_mldet")
+region = Rect2(256, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4v7av"]
+atlas = ExtResource("5_mldet")
+region = Rect2(384, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yr1hq"]
+atlas = ExtResource("5_mldet")
+region = Rect2(0, 192, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ka86"]
+atlas = ExtResource("5_mldet")
+region = Rect2(128, 192, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oujl6"]
+atlas = ExtResource("5_mldet")
+region = Rect2(256, 192, 128, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eu31i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0f7n6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2o2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdj0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpvam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydhyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_434wl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50cm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gqs5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rim31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqvor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1cyb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4v7av")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yr1hq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ka86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oujl6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a44cj"]
 size = Vector2(20, 23.25)
 
@@ -152,6 +266,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 
 [node name="Run" type="AnimatedSprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(3, -20)
 sprite_frames = SubResource("SpriteFrames_8uc3d")
@@ -167,6 +282,7 @@ metadata/_aseprite_wizard_config_ = {
 }
 
 [node name="Jump" type="AnimatedSprite2D" parent="."]
+visible = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_vdhq5")
 frame_progress = 0.880017
@@ -181,6 +297,21 @@ metadata/_aseprite_wizard_config_ = {
 }
 
 [node name="Attack" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-34, -52)
+sprite_frames = SubResource("SpriteFrames_eu31i")
+frame_progress = 0.2535
+centered = false
+offset = Vector2(2.08165e-12, 2.08165e-12)
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/vagabond/vagabond-attack.aseprite"
+}
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0, 0.499999)
@@ -202,10 +333,12 @@ script = ExtResource("4_21eyi")
 wait_time = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 0.375)
 shape = SubResource("RectangleShape2D_a44cj")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 8
 

@@ -7,6 +7,9 @@ signal projectile_shot(p)
 @onready var idle_sprite: AnimatedSprite2D = $Idle
 @onready var run_sprite: AnimatedSprite2D = $Run
 @onready var jump_sprite: AnimatedSprite2D = $Jump
+@onready var attack_sprite: AnimatedSprite2D = $Attack
+
+@onready var all_sprites = [idle_sprite, run_sprite, jump_sprite, attack_sprite]
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var area: Area2D = $Area2D
@@ -23,17 +26,18 @@ var projectileScene = preload("res://scenes/projectile.tscn")
 
 var pos_y = global_position.y
 
+# jump
 var jump_started = false
 var previous_height = global_position.y
 
+# attack
+var attack_started = false
+
 func _ready():
-	run_sprite.play()
-	jump_sprite.play()
-	idle_sprite.play()
-	
-	idle_sprite.hide()
-	run_sprite.hide()
-	jump_sprite.hide()
+	for s in all_sprites:
+		if s != attack_sprite:
+			s.play()
+		s.hide()
 	
 	life_bar.invincibility_span = INVINCIBILITY_SPAN
 	life_bar.connect('life_reduced', on_life_reduced)
@@ -66,8 +70,12 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 		
 	if is_on_floor():
-		jump_sprite.hide()
-		idle_sprite.show()
+		if attack_started:
+			idle_sprite.hide()
+			jump_sprite.hide()
+		else:
+			jump_sprite.hide()
+			idle_sprite.show()
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -80,9 +88,6 @@ func _physics_process(delta):
 		p.xSpeed = -1 if idle_sprite.flip_h == false else 1
 		p.ySpeed = THROW_FORCE
 		emit_signal("projectile_shot", p)
-		
-	if Input.is_action_just_pressed('attack'):
-		print('pressed')
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -103,6 +108,19 @@ func _physics_process(delta):
 		set_flip(idle_sprite)
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		run_sprite.hide()
+		if not attack_started:
+			idle_sprite.show()
+		else:
+			idle_sprite.hide()
+			
+	if Input.is_action_just_pressed('attack') && is_on_floor() && not direction:
+		play_attack_animation()
+	
+	if attack_sprite.frame == 4:
+		attack_started = false
+		attack_sprite.stop()
+		attack_sprite.frame = 0
+		attack_sprite.hide()
 	
 	move_and_slide()
 
@@ -124,6 +142,24 @@ func set_flip(sprite):
 		sprite.set_flip_h(false)
 	elif velocity.x < 0:
 		sprite.set_flip_h(true)
+		
+func play_attack_animation():
+	if attack_started:
+		return
+		
+	for s in all_sprites:
+		s.hide()
+		
+	attack_started = true
+	attack_sprite.flip_h = idle_sprite.flip_h
+	
+	if attack_sprite.flip_h:
+		attack_sprite.position = Vector2(-92,-52)
+	else:
+		attack_sprite.position = Vector2(-34,-52)
+			
+	attack_sprite.play()
+	attack_sprite.show()
 
 func play_jumping_animation():
 	if is_on_floor():
