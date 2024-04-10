@@ -180,6 +180,8 @@ metadata/_aseprite_wizard_config_ = {
 "source": "res://assets/vagabond/vagabond-jump.aseprite"
 }
 
+[node name="Attack" type="AnimatedSprite2D" parent="."]
+
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0, 0.499999)
 scale = Vector2(1, 1.15)

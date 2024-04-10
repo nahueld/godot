@@ -12,7 +12,7 @@ signal projectile_shot(p)
 @onready var area: Area2D = $Area2D
 
 const SPEED = 200.0
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY = -350.0
 const THROW_FORCE = -400
 const INVINCIBILITY_SPAN = 0.5
 
@@ -22,6 +22,9 @@ var collisions: Dictionary = {}
 var projectileScene = preload("res://scenes/projectile.tscn")
 
 var pos_y = global_position.y
+
+var jump_started = false
+var previous_height = global_position.y
 
 func _ready():
 	run_sprite.play()
@@ -56,17 +59,19 @@ func _process(delta):
 			life_bar.change_life(-v.damage)
 
 func _physics_process(delta):
-	play_jumping_animation()
 	# Add the gravity.
 	if not is_on_floor():
+		idle_sprite.hide()
+		play_jumping_animation()
 		velocity.y += gravity * delta
-	else:
+		
+	if is_on_floor():
 		jump_sprite.hide()
+		idle_sprite.show()
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-		
 		
 	if Input.is_action_just_pressed("ui_up"):
 		var p = projectileScene.instantiate()
@@ -79,35 +84,25 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed('attack'):
 		print('pressed')
 		
-
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
+	
 	if direction:
 		if is_on_floor():
 			idle_sprite.hide()
 			run_sprite.show()
 			
-			if velocity.x > 0:
-				run_sprite.set_flip_h(false)
-			elif velocity.x < 0:
-				run_sprite.set_flip_h(true)	
-			#if has_to_unflip:
-				#run_sprite.set_flip_h(false)
+			set_flip(run_sprite)
 				
 			velocity.x = direction * SPEED
 		else:
 			idle_sprite.hide()
 			run_sprite.hide()
 	else:
-		if velocity.x > 0:
-			idle_sprite.set_flip_h(false)
-		elif velocity.x < 0:
-			idle_sprite.set_flip_h(true)
-			
+		set_flip(idle_sprite)
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		run_sprite.hide()
-		#idle_sprite.show()
 	
 	move_and_slide()
 
@@ -123,20 +118,29 @@ func on_life_reduced(damage):
 func _on_screen_exit():
 	print('y se marcho :(')
 	queue_free()
-
-var previous_height = global_position.y
+	
+func set_flip(sprite):
+	if velocity.x > 0:
+		sprite.set_flip_h(false)
+	elif velocity.x < 0:
+		sprite.set_flip_h(true)
 
 func play_jumping_animation():
 	if is_on_floor():
+		if jump_started:
+			jump_started = false
+			idle_sprite.show()
 		return
 	
-	print('previous_height', previous_height)
+	idle_sprite.hide()
+	jump_started = true
+	
+	set_flip(jump_sprite)
 	var is_rising = previous_height > global_position.y
 	var is_falling = previous_height < global_position.y
 	
 	var difference = global_position.y - previous_height
 	var rounded = roundi(difference)
-	print('rounded ', rounded)
 
 	if rounded == 0:
 		jump_sprite.set_frame(1)
