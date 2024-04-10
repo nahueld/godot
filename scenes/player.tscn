@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bmt6ylwymfqlv"]
+[gd_scene load_steps=42 format=3 uid="uid://bmt6ylwymfqlv"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l1ch3"]
 [ext_resource type="Texture2D" uid="uid://blvwnwppofxot" path="res://scenes/vagabond-idle.png" id="2_4m1oa"]
@@ -241,6 +241,9 @@ size = Vector2(20, 23.25)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ww7vc"]
 size = Vector2(22, 23)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cs3ks"]
+size = Vector2(82, 23)
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_l1ch3")
@@ -297,10 +300,12 @@ metadata/_aseprite_wizard_config_ = {
 }
 
 [node name="Attack" type="AnimatedSprite2D" parent="."]
+light_mask = 2
+visibility_layer = 8
 texture_filter = 1
 position = Vector2(-34, -52)
 sprite_frames = SubResource("SpriteFrames_eu31i")
-frame_progress = 0.2535
+frame_progress = 0.327529
 centered = false
 offset = Vector2(2.08165e-12, 2.08165e-12)
 metadata/_aseprite_wizard_config_ = {
@@ -314,6 +319,7 @@ metadata/_aseprite_wizard_config_ = {
 }
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
 position = Vector2(0, 0.499999)
 scale = Vector2(1, 1.15)
 
@@ -346,5 +352,16 @@ collision_mask = 8
 position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_ww7vc")
 
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(-34, -52)
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(33, 52)
+shape = SubResource("RectangleShape2D_cs3ks")
+
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exit"]
 [connection signal="timeout" from="LifeBar/InvincibilitySpan" to="LifeBar" method="_on_invincibility_span_timeout"]
+[connection signal="body_entered" from="Area2D2" to="." method="on_body_entered_to_slash"]
+[connection signal="body_exited" from="Area2D2" to="." method="on_body_exited_slash"]

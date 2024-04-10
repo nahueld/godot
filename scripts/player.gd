@@ -22,6 +22,8 @@ const INVINCIBILITY_SPAN = 0.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var collisions: Dictionary = {}
+var in_slash_range: Dictionary = {}
+
 var projectileScene = preload("res://scenes/projectile.tscn")
 
 var pos_y = global_position.y
@@ -93,7 +95,7 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	
-	if direction:
+	if direction && not attack_started:
 		if is_on_floor():
 			idle_sprite.hide()
 			run_sprite.show()
@@ -127,11 +129,12 @@ func _physics_process(delta):
 func on_life_reduced(damage):
 	var tween = create_tween()
 	
-	var current_modulate = idle_sprite.modulate
-	
-	for n in 4:
-		var modulate_to = current_modulate if n % 2 else Color.RED 
-		tween.tween_property(idle_sprite, 'modulate', modulate_to, 0.1)
+	for spirte in all_sprites:
+		var current_modulate = spirte.modulate
+		
+		for n in 4:
+			var modulate_to = current_modulate if n % 2 else Color.RED 
+			tween.tween_property(spirte, 'modulate', modulate_to, 0.1)
 	
 func _on_screen_exit():
 	print('y se marcho :(')
@@ -160,6 +163,9 @@ func play_attack_animation():
 			
 	attack_sprite.play()
 	attack_sprite.show()
+	
+	for b in in_slash_range.values():
+		b.queue_free()
 
 func play_jumping_animation():
 	if is_on_floor():
@@ -188,3 +194,13 @@ func play_jumping_animation():
 	previous_height = global_position.y
 	jump_sprite.pause()
 	jump_sprite.show()
+
+func on_body_entered_to_slash(body):
+	if body is Fly:
+		var key = body.get_instance_id()
+		var value = body
+		print('in_slash_range')
+		in_slash_range[key] = body
+	
+func on_body_exited_slash(body):
+	in_slash_range.erase(body.get_instance_id())
