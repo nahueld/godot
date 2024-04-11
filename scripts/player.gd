@@ -129,12 +129,13 @@ func _physics_process(delta):
 func on_life_reduced(damage):
 	var tween = create_tween()
 	
-	for spirte in all_sprites:
-		var current_modulate = spirte.modulate
+	for s in all_sprites:
+		if s.visible:
+			var current_modulate = s.modulate
 		
-		for n in 4:
-			var modulate_to = current_modulate if n % 2 else Color.RED 
-			tween.tween_property(spirte, 'modulate', modulate_to, 0.1)
+			for n in 4:
+				var modulate_to = current_modulate if n % 2 else Color.RED 
+				tween.tween_property(s, 'modulate', modulate_to, 0.1)
 	
 func _on_screen_exit():
 	print('y se marcho :(')
@@ -165,7 +166,12 @@ func play_attack_animation():
 	attack_sprite.show()
 	
 	for b in in_slash_range.values():
-		b.queue_free()
+		print('global_position', global_position.x)
+		print('fly', b.global_position.x)
+		if attack_sprite.flip_h && global_position.x > b.global_position.x:
+			b.queue_free()
+		elif not attack_sprite.flip_h && global_position.x < b.global_position.x:
+			b.queue_free()
 
 func play_jumping_animation():
 	if is_on_floor():
@@ -199,7 +205,6 @@ func on_body_entered_to_slash(body):
 	if body is Fly:
 		var key = body.get_instance_id()
 		var value = body
-		print('in_slash_range')
 		in_slash_range[key] = body
 	
 func on_body_exited_slash(body):
